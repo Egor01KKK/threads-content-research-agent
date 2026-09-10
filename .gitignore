@@ -1,0 +1,39 @@
+/dist/
+/bin/
+*.out
+*.test
+.DS_Store
+
+# Local planning state is useful to maintainers but is not product source.
+/.planning/
+
+# Built docs site (tago output) and its cache
+/docs/public/
+/docs/public-pages/
+/docs/public-cf/
+**/.tago-cache.db
+
+# Local research datasets and generated exports
+/output/
+/research-output/
+/validation-output/
+/analysis-independent/
+/video-prep/
+*.db
+*.sqlite
+*.sqlite3
+*.jsonl
+*.log
+coverage.out
+
+# Local configuration and development environments
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Internal validation scripts are not part of the public product surface.
+/scripts/*validation*.sh

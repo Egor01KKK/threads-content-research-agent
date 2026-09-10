@@ -1,0 +1,84 @@
+{
+  "export_type": "threads-research-complete-readable-fixture",
+  "export_version": 1,
+  "source": "synthetic fixture; not collected from Threads",
+  "topic": "sample public Threads research",
+  "analysis_provider_called": false,
+  "corpus": [
+    {
+      "post": {
+        "id": "fixture-post-1",
+        "shortcode": "AbCdEf1",
+        "url": "https://www.threads.com/@sample_business/post/AbCdEf1",
+        "text": "We lost two hours to manual follow-up today. Which simple workflow would you automate first?",
+        "author_username": "sample_business",
+        "published_at": "2026-01-15T10:00:00Z",
+        "likes": 8,
+        "replies": 2,
+        "reposts": 1,
+        "quotes": 0,
+        "relevance_label": "relevant",
+        "relevance_score": 0.92,
+        "relevance_reasons": ["synthetic operational pain"]
+      },
+      "performance": {
+        "engagement": 13,
+        "baseline_engagement": 8,
+        "relative_performance": 1.625,
+        "baseline_confidence": "usable",
+        "metric_coverage": {"known": 4, "total": 5}
+      },
+      "provenance": [
+        {
+          "source_stage": "search",
+          "anchor_query": "manual follow-up",
+          "profile_username": "sample_business",
+          "depth": 0
+        }
+      ],
+      "stages": ["search"],
+      "assessment": {
+        "business_process": "lead follow-up",
+        "pain_types": ["manual work"],
+        "tools_mentioned": ["CRM"],
+        "pain_strength": "explicit",
+        "solution_seeking": "open question",
+        "buyer_intent": "unknown",
+        "owner_likelihood": "likely",
+        "it_actionability": "medium"
+      }
+    },
+    {
+      "post": {
+        "id": "fixture-post-2",
+        "text": "A short example with no public permalink or metrics, so the viewer can show missing fields safely.",
+        "author_username": "sample_studio"
+      }
+    },
+    {
+      "post": {
+        "id": "fixture-post-3",
+        "url": "https://www.threads.com/@sample_builder/post/GhIjKl2",
+        "text": "Synthetic provider note: built a small workflow and documented the result.",
+        "username": "sample_builder",
+        "like_count": 3,
+        "reply_count": 1,
+        "timestamp": "2026-01-17T12:30:00Z"
+      }
+    }
+  ],
+  "seed_profiles": [
+    {
+      "username": "sample_business",
+      "verification_status": "accepted",
+      "verification_confidence": "synthetic",
+      "business_categories": ["small business"],
+      "profile": {
+        "name": "Sample Business",
+        "bio": "Synthetic fixture profile",
+        "follower_count": 120,
+        "verified": false
+      }
+    }
+  ]
+}

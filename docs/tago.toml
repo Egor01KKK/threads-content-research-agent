@@ -1,0 +1,10 @@
+title       = "th"
+baseURL     = "https://threads-cli.tamnd.com/"
+description = "th turns threads.com into clean, scriptable, structured data: profiles, posts, replies, and search, read as an anonymous crawler."
+contentDir  = "content"
+outputDir   = "public"
+theme       = "tago-doks"
+syntaxHighlight = "true"
+
+[params]
+github = "https://github.com/Egor01KKK/threads-content-research-agent"

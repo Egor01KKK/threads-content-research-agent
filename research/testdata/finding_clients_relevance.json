@@ -1,0 +1,22 @@
+[
+  {"id":"fixture-001","author":"sample_designer","url":"https://www.threads.com/@sample_designer/post/Fixture001","text":"I am a freelance designer looking for new clients. Any referrals?","expected_label":"relevant"},
+  {"id":"fixture-002","author":"sample_builder","url":"https://www.threads.com/@sample_builder/post/Fixture002","text":"Who has actually found a client on Threads? I want to try it for my freelance work.","expected_label":"relevant"},
+  {"id":"fixture-003","author":"sample_products","url":"https://www.threads.com/@sample_products/post/Fixture003","text":"This is my first week trying to find clients for my digital products.","expected_label":"relevant"},
+  {"id":"fixture-004","author":"sample_webdev","url":"https://www.threads.com/@sample_webdev/post/Fixture004","text":"Please send me a web development client. I need paid work.","expected_label":"relevant"},
+  {"id":"fixture-005","author":"sample_social","url":"https://www.threads.com/@sample_social/post/Fixture005","text":"I need clients for my social media management service. How do I start?","expected_label":"relevant"},
+  {"id":"fixture-006","author":"sample_writer","url":"https://www.threads.com/@sample_writer/post/Fixture006","text":"Freelance writers: where do you find your next clients?","expected_label":"relevant"},
+  {"id":"fixture-007","author":"sample_graphics","url":"https://www.threads.com/@sample_graphics/post/Fixture007","text":"Need a design client for my portfolio and paid work.","expected_label":"relevant"},
+  {"id":"fixture-008","author":"sample_books","url":"https://www.threads.com/@sample_books/post/Fixture008","text":"I offer bookkeeping as a freelancer and need more clients.","expected_label":"relevant"},
+  {"id":"fixture-009","author":"sample_availability","url":"https://www.threads.com/@sample_availability/post/Fixture009","text":"Looking for clients!!","expected_label":"adjacent"},
+  {"id":"fixture-010","author":"sample_call","url":"https://www.threads.com/@sample_call/post/Fixture010","text":"Client call today.","expected_label":"adjacent"},
+  {"id":"fixture-011","author":"sample_walk","url":"https://www.threads.com/@sample_walk/post/Fixture011","text":"A sunny walk fixed my mood.","expected_label":"irrelevant"},
+  {"id":"fixture-012","author":"sample_fern","url":"https://www.threads.com/@sample_fern/post/Fixture012","text":"Fancy a fern for the office?","expected_label":"irrelevant"},
+  {"id":"fixture-013","author":"sample_language","url":"https://www.threads.com/@sample_language/post/Fixture013","text":"What does this French phrase mean?","expected_label":"irrelevant"},
+  {"id":"fixture-014","author":"sample_logo","url":"https://www.threads.com/@sample_logo/post/Fixture014","text":"My existing client loved the finished logo.","expected_label":"irrelevant"},
+  {"id":"fixture-015","author":"sample_study","url":"https://www.threads.com/@sample_study/post/Fixture015","text":"I am learning two languages at once.","expected_label":"irrelevant"},
+  {"id":"fixture-016","author":"sample_coffee","url":"https://www.threads.com/@sample_coffee/post/Fixture016","text":"A new coffee recipe for the morning.","expected_label":"irrelevant"},
+  {"id":"fixture-017","author":"sample_restaurant","url":"https://www.threads.com/@sample_restaurant/post/Fixture017","text":"The customer service was terrible at the restaurant.","expected_label":"irrelevant"},
+  {"id":"fixture-018","author":"sample_movies","url":"https://www.threads.com/@sample_movies/post/Fixture018","text":"What is everyone watching this weekend?","expected_label":"irrelevant"},
+  {"id":"fixture-019","author":"sample_market","url":"https://www.threads.com/@sample_market/post/Fixture019","text":"The market opened higher today.","expected_label":"irrelevant"},
+  {"id":"fixture-020","author":"sample_dance","url":"https://www.threads.com/@sample_dance/post/Fixture020","text":"I joined a campus dance challenge.","expected_label":"irrelevant"}
+]

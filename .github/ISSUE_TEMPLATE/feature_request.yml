@@ -1,0 +1,28 @@
+name: Feature request
+description: Suggest an improvement that fits the public read-only CLI boundary
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project stays public-data-only and read-only. Requests for login scraping, posting automation, CAPTCHA bypass, or proxy rotation are out of scope.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the smallest useful behavior and any alternatives considered.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Synthetic examples are welcome. Do not attach private exports or credentials.

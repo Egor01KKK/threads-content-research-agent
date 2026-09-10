@@ -1,0 +1,18 @@
+# Pinned golangci-lint configuration so lint behaviour is the same on every
+# machine and in CI, rather than drifting with the action's built-in default.
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  # The standard set (errcheck, govet, ineffassign, staticcheck, unused) plus a
+  # couple of cheap, high-signal extras.
+  default: standard
+  enable:
+    - misspell
+    - unconvert
+
+formatters:
+  enable:
+    - gofmt

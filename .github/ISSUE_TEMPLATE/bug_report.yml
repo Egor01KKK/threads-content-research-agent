@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a reproducible problem in the CLI or local viewer
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include tokens, cookies, private exports, databases, or personal filesystem paths.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `th version` or the release archive version.
+      placeholder: th v0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Exact commands and a small synthetic input if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true

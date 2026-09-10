@@ -1,0 +1,58 @@
+version: 2
+
+project_name: th
+
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - id: th
+    binary: th
+    main: ./cmd/th
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X github.com/Egor01KKK/threads-content-research-agent/cli.Version={{ .Version }}
+      - -X github.com/Egor01KKK/threads-content-research-agent/cli.Commit={{ .ShortCommit }}
+      - -X github.com/Egor01KKK/threads-content-research-agent/cli.Date={{ .CommitDate }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    targets:
+      - darwin_arm64
+      - darwin_amd64
+      - linux_arm64
+      - linux_amd64
+      - windows_amd64
+
+archives:
+  - id: default
+    name_template: "th_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "^ci:"
+      - Merge pull request
+      - Merge branch
+
+release:
+  draft: false
+  prerelease: auto

@@ -1,0 +1,62 @@
+name: docs
+
+# Docs are built as a check and downloadable artifact. Hosting is deliberately
+# not tied to an upstream domain or third-party account; a repository owner can
+# add deployment after choosing their own hosting and permissions.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - ".gitmodules"
+      - ".github/workflows/docs.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".gitmodules"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Checkout tago
+        uses: actions/checkout@v5
+        with:
+          repository: tamnd/tago
+          path: .tago-src
+          fetch-depth: 1
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: .tago-src/go.mod
+          cache: false
+
+      - name: Build tago
+        working-directory: .tago-src
+        run: go build -o "$RUNNER_TEMP/tago" ./cmd/tago/
+
+      - name: Build docs
+        working-directory: docs
+        run: "$RUNNER_TEMP/tago build --base-url https://example.invalid/threads-cli/ --output public"
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: docs-site
+          path: docs/public
+          retention-days: 7
