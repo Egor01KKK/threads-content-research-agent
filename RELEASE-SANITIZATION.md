@@ -47,9 +47,8 @@ rotation, posting, or aggressive collection. The existing user-supplied session
 compatibility path is optional and is not required by anonymous collection or
 the viewer.
 
-Before publishing, review repository ownership, upstream attribution, license
-rights, and the visible Git history. The working-tree deletions above do not
-erase those paths from earlier commits; the current history contains the
-internal planning/audit commit, so rewrite or squash history before a public
-push if those records are not intended to be public. See
+The public `main` history was created as a clean orphan root and contains none
+of the internal planning/audit commit. The old `research-mvp`, `master`, and
+`backup/pre-public-release` refs remain local only so the previous state is
+recoverable; none was pushed to the public repository. See
 `PUBLIC-RELEASE-TEST.md` for the verification results and remaining warnings.
