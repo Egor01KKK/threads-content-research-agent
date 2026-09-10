@@ -43,11 +43,17 @@ make build
 ./bin/th --help
 ```
 
-Run an offline command immediately:
+Inspect the CLI immediately; these commands work offline:
+
+```sh
+./bin/th version
+./bin/th --help
+```
+
+Public lookups require network access to the current Threads surface:
 
 ```sh
 ./bin/th id "@example_creator" -o json
-./bin/th version
 ```
 
 Try a small public search. Search output is JSON Lines when piped; an empty file is a valid result, while a non-zero exit code is an error or access limitation:
