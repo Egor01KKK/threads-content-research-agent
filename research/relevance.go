@@ -703,22 +703,6 @@ func hasFamily(tokens []string, family string) bool {
 	return false
 }
 
-func hasAcquisitionIntent(tokens []string) bool {
-	for _, token := range tokens {
-		stem := relevanceStem(token)
-		for _, prefix := range []string{
-			"find", "found", "get", "look", "seek", "need", "want", "acquir", "outreach",
-			"contact", "book", "land", "win", "offer", "avail", "connect",
-			"give", "provid", "promot", "recommend", "referr", "try",
-		} {
-			if strings.HasPrefix(stem, prefix) {
-				return true
-			}
-		}
-	}
-	return false
-}
-
 func hasServiceAnchor(tokens []string) bool {
 	for _, token := range tokens {
 		stem := relevanceStem(token)
@@ -732,25 +716,6 @@ func hasServiceAnchor(tokens []string) bool {
 				return true
 			}
 		}
-	}
-	return false
-}
-
-func hasSpecificContext(tokens []string) bool {
-	stop := map[string]bool{
-		"a": true, "an": true, "and": true, "am": true, "be": true, "for": true,
-		"i": true, "im": true, "me": true, "my": true, "of": true, "on": true,
-		"or": true, "the": true, "this": true, "to": true, "we": true, "who": true,
-		"how": true, "what": true, "where": true, "you": true, "your": true,
-		"anybody": true, "does": true, "has": true, "have": true, "just": true,
-		"looking": true, "look": true, "find": true, "finding": true, "get": true,
-		"getting": true, "need": true, "want": true, "trying": true, "try": true,
-	}
-	for _, token := range tokens {
-		if stop[token] || tokenFamily(token) == "client" || tokenFamily(token) == "freelance" || hasAcquisitionIntent([]string{token}) {
-			continue
-		}
-		return true
 	}
 	return false
 }

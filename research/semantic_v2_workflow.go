@@ -247,7 +247,7 @@ func buildWorkflowClusters(records []SemanticV2PostRecord, contexts []AuthorBusi
 		if record.Post.ID != "" {
 			group.postIDs[record.Post.ID] = true
 		}
-		if record.Post.PublishedAt.IsZero() == false {
+		if !record.Post.PublishedAt.IsZero() {
 			date := record.Post.PublishedAt.UTC()
 			if group.early == nil || date.Before(*group.early) {
 				group.early = &date

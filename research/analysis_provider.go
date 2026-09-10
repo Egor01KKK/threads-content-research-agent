@@ -423,7 +423,7 @@ func anthropicContent(data []byte) (string, error) {
 		}
 	}
 	if strings.TrimSpace(out.String()) == "" {
-		return "", errors.New("Anthropic response contains no text content")
+		return "", errors.New("anthropic response contains no text content")
 	}
 	return out.String(), nil
 }

@@ -114,9 +114,10 @@ func RunWithAnalysis(ctx context.Context, cfg Config, collector Collector, expan
 				return streamErr
 			}
 			queryReport.ResultCount++
-			if phase == "probe" {
+			switch phase {
+			case "probe":
 				queryReport.ProbeResultCount++
-			} else if phase == "deep" {
+			case "deep":
 				queryReport.DeepResultCount++
 			}
 			report.Collection.RawPostsCollected++
@@ -143,7 +144,8 @@ func RunWithAnalysis(ctx context.Context, cfg Config, collector Collector, expan
 				report.Warnings = appendWarningOnce(report.Warnings, fmt.Sprintf("query %q returned a record without a post ID", query))
 				continue
 			}
-			if phase == "probe" {
+			switch phase {
+			case "probe":
 				if seenIDs != nil {
 					if seenIDs[post.ID] {
 						queryReport.ProbeDuplicates++
@@ -154,7 +156,7 @@ func RunWithAnalysis(ctx context.Context, cfg Config, collector Collector, expan
 				if _, exists := postsByID[post.ID]; !exists {
 					queryReport.ProbeUniqueContribution++
 				}
-			} else if phase == "deep" {
+			case "deep":
 				if _, exists := postsByID[post.ID]; !exists {
 					queryReport.DeepUniqueContribution++
 				}

@@ -55,10 +55,6 @@ type deepState struct {
 	profilePosts  map[string]bool
 	baselinePosts map[string][]Post
 	queriesByPost map[string][]string
-
-	searchPagination  DeepPaginationMetrics
-	profilePagination DeepPaginationMetrics
-	replyPagination   DeepPaginationMetrics
 }
 
 func newDeepState() *deepState {
@@ -738,16 +734,6 @@ func mergeDeepSeedProfile(existing, current DeepSeedProfile) DeepSeedProfile {
 	return current
 }
 
-func countSelectedProfiles(profiles map[string]DeepSeedProfile) int {
-	n := 0
-	for _, profile := range profiles {
-		if profile.Selected {
-			n++
-		}
-	}
-	return n
-}
-
 func countSeedSelectedProfiles(profiles map[string]DeepSeedProfile) int {
 	n := 0
 	for _, profile := range profiles {
@@ -781,7 +767,7 @@ func countRejectedProfiles(profiles map[string]DeepSeedProfile) int {
 func collectSelectedProfiles(ctx context.Context, cfg Config, collector Collector, store *Store, state *deepState, runID int64, deep *DeepReport, snowballOnly bool, report *Report) error {
 	profiles := make([]DeepSeedProfile, 0)
 	for _, profile := range state.profiles {
-		if !profile.SeedSelected && !(profile.Selected && profile.ProfileFetched) {
+		if !profile.SeedSelected && (!profile.Selected || !profile.ProfileFetched) {
 			continue
 		}
 		if snowballOnly && !containsString(profile.SourceStages, "REPLY_SNOWBALL") {

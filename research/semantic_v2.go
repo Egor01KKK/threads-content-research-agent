@@ -569,9 +569,10 @@ func semanticITOpportunity(text string, assessment SemanticAssessmentV2) (int, I
 	if hasAnySemantic(text, "требован", "чек-лист", "чеклист", "срок", "статус", "запис", "отчет", "отчёт", "ответ", "вопрос") {
 		score++ // rule-based or structured step
 	}
-	if assessment.HumanWorkflowLoad == WorkflowLoadHigh {
+	switch assessment.HumanWorkflowLoad {
+	case WorkflowLoadHigh:
 		score += 2
-	} else if assessment.HumanWorkflowLoad == WorkflowLoadMedium {
+	case WorkflowLoadMedium:
 		score++
 	}
 	if hasAnySemantic(text, "документ", "тз", "техническое задание", "заявк", "заказ", "данн", "таблиц", "срок") {

@@ -29,26 +29,6 @@ const (
 	BuyerIntentNone   = "NONE"
 )
 
-var russianPainTypes = []string{
-	"LEAD_GENERATION",
-	"SALES",
-	"CRM_CLIENT_MANAGEMENT",
-	"CUSTOMER_COMMUNICATION",
-	"BOOKING_NO_SHOW",
-	"MANUAL_WORK",
-	"AUTOMATION",
-	"ANALYTICS_REPORTING",
-	"WEBSITE_CONVERSION",
-	"ECOMMERCE",
-	"PAYMENTS",
-	"INTEGRATIONS",
-	"CONTENT_MARKETING",
-	"TEAM_OPERATIONS",
-	"INTERNAL_PROCESSES",
-	"DATA_MANAGEMENT",
-	"OTHER",
-}
-
 // BusinessPainAssessment is a deterministic, Russian-language assessment for
 // small-business pain discovery. It is deliberately separate from relevance,
 // commercial intent, and performance ranking.
@@ -470,9 +450,10 @@ func russianPainReasons(assessment BusinessPainAssessment, pain, workaround, sol
 	if assessment.RussianLanguage == Yes {
 		reasons = append(reasons, "russian_language_context")
 	}
-	if assessment.OwnerLikelihood == OwnerLikelihoodHigh || assessment.OwnerLikelihood == OwnerLikelihoodMedium {
+	switch assessment.OwnerLikelihood {
+	case OwnerLikelihoodHigh, OwnerLikelihoodMedium:
 		reasons = append(reasons, "owner_or_operator_context")
-	} else if assessment.OwnerLikelihood == OwnerLikelihoodLow {
+	case OwnerLikelihoodLow:
 		reasons = append(reasons, "weak_owner_context")
 	}
 	if pain {
@@ -490,9 +471,10 @@ func russianPainReasons(assessment BusinessPainAssessment, pain, workaround, sol
 	if len(assessment.ToolsMentioned) > 0 {
 		reasons = append(reasons, "named_tool_or_service")
 	}
-	if assessment.ITActionability == ITActionabilityHigh {
+	switch assessment.ITActionability {
+	case ITActionabilityHigh:
 		reasons = append(reasons, "high_it_actionability")
-	} else if assessment.ITActionability == ITActionabilityMedium {
+	case ITActionabilityMedium:
 		reasons = append(reasons, "medium_it_actionability")
 	}
 	if assessment.BuyerIntent != BuyerIntentNone {

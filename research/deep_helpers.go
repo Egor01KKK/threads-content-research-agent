@@ -6,7 +6,6 @@ import (
 	"sort"
 	"strings"
 	"time"
-	"unicode"
 )
 
 func ownerLikely(value string) bool {
@@ -642,16 +641,6 @@ func maxIntValue(left, right int) int {
 		return left
 	}
 	return right
-}
-
-func runeCount(value string) int {
-	n := 0
-	for _, r := range value {
-		if unicode.IsLetter(r) {
-			n++
-		}
-	}
-	return n
 }
 
 func finalizeDeepResearch(ctx context.Context, cfg Config, store *Store, state *deepState, report *Report, deep *DeepReport, startedAt time.Time) error {

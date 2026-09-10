@@ -210,10 +210,6 @@ type analysisMention struct {
 	post ClassifiedPost
 }
 
-type mentionCluster struct {
-	members []analysisMention
-}
-
 func clusterAnalysisMentions(posts []ClassifiedPost, kind string, selector func(ClassifiedPost) []string) []PainCluster {
 	var mentions []analysisMention
 	for _, post := range posts {
@@ -365,7 +361,7 @@ func clusterTokens(value string) []string {
 			tokens = append(tokens, value)
 		}
 	}
-	for _, r := range []rune(value) {
+	for _, r := range value {
 		if unicode.IsLetter(r) || unicode.IsDigit(r) {
 			current = append(current, r)
 			continue
