@@ -13,7 +13,7 @@ LDFLAGS := -s -w \
 	-X github.com/Egor01KKK/threads-content-research-agent/cli.Commit=$(COMMIT) \
 	-X github.com/Egor01KKK/threads-content-research-agent/cli.Date=$(DATE)
 
-.PHONY: build install test vet fmt check viewer-check viewer clean run smoke
+.PHONY: build install test vet fmt check public-check viewer-check viewer clean run smoke
 
 build:
 	@mkdir -p $(dir $(BINARY))
@@ -28,7 +28,10 @@ test:
 vet:
 	go vet ./...
 
-check: test vet viewer-check
+check: test vet public-check viewer-check
+
+public-check:
+	python3 scripts/public-release-check.py
 
 viewer-check:
 	python3 -m py_compile scripts/research-viewer.py

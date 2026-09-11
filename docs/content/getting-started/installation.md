@@ -27,7 +27,7 @@ you moved it. Make sure that directory is on your `PATH`.
 
 ```bash
 git clone https://github.com/Egor01KKK/threads-content-research-agent.git
-cd threads-cli
+cd threads-content-research-agent
 make build        # produces ./bin/th
 ./bin/th version
 ```

@@ -46,6 +46,30 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: go tool cover -func=coverage.out | tail -1
 
+  # Windows is a published release target. Keep this runtime check offline so
+  # it verifies the binary, not the availability of Threads' public surface.
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          check-latest: true
+          cache: true
+      - name: build packages
+        run: go build ./...
+      - name: test packages
+        run: go test ./...
+      - name: build CLI
+        run: go build -o th.exe ./cmd/th
+      - name: offline runtime checks
+        shell: pwsh
+        run: |
+          .\th.exe version
+          .\th.exe --help
+          .\th.exe id "@example_creator" -o json
+
   # golangci-lint bundles staticcheck, govet, ineffassign, errcheck, unused and
   # more, so it is the main quality gate. Config lives in .golangci.yml.
   lint:
@@ -103,3 +127,14 @@ jobs:
           distribution: goreleaser
           version: "~> v2"
           args: check
+
+  # Check the tracked public tree for local paths, private output names, and
+  # high-signal credential formats before they can reach a public release.
+  public-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: public tree and secret guard
+        run: |
+          python3 scripts/public-release-check.py --self-test
+          python3 scripts/public-release-check.py

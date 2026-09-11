@@ -43,17 +43,21 @@ make build
 ./bin/th --help
 ```
 
-Inspect the CLI immediately; these commands work offline:
+These deterministic commands work offline:
 
 ```sh
 ./bin/th version
 ./bin/th --help
+./bin/th id "@example_creator" -o json
 ```
 
-Public lookups require network access to the current Threads surface:
+These commands read the current public Threads surface and require network access:
 
 ```sh
-./bin/th id "@example_creator" -o json
+./bin/th profile <handle>
+./bin/th post "<threads-post-url>" --output json
+./bin/th search "AI automation" --limit 5 --output jsonl
+./bin/th research "finding clients for freelancers" --db output/research.db
 ```
 
 Try a small public search. Search output is JSON Lines when piped; an empty file is a valid result, while a non-zero exit code is an error or access limitation:
