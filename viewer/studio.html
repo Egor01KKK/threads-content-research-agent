@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>th studio</title>
+<style>
+:root{
+  --font-sans:-apple-system,BlinkMacSystemFont,"Inter Variable","Inter",system-ui,sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --color-bg:#fff; --color-surface:#f2f2f7; --color-surface-2:#e5e5ea;
+  --color-ink:#000; --color-ink-2:#8a8a8e; --color-ink-3:#c4c4c8;
+  --color-hero:#1c1c1e; --color-hero-2:#2c2c2e; --color-hero-3:#3a3a3c; --color-on-hero:#fff;
+  --color-float:#fff; --color-on-float:#000;
+  --color-accent:#0a7cff; --color-accent-deep:#0a4fb0; --color-success:#34c759;
+  --color-tint-blue:#dbe9fd; --color-tint-red:#fbdcdc; --color-tint-mint:#d9f2e4;
+  --text-large-title:34px; --text-large-title-lh:41px;
+  --text-title-2:22px; --text-title-2-lh:28px;
+  --text-title-3:20px; --text-title-3-lh:25px;
+  --text-headline:17px; --text-headline-lh:22px;
+  --text-body:17px; --text-body-lh:24px;
+  --text-read:17px; --text-read-lh:27px;
+  --text-callout:16px; --text-callout-lh:21px;
+  --text-subhead:15px; --text-subhead-lh:20px;
+  --text-footnote:13px; --text-footnote-lh:18px;
+  --text-caption:12px; --text-caption-lh:16px;
+  --radius-card:24px; --radius-cover:20px; --radius-inner:16px; --radius-chip:999px;
+  --page:16px; --gap:12px; --tap:44px;
+}
+*,*::before,*::after{box-sizing:border-box}
+/* display:grid у блоков панели сильнее браузерного [hidden], иначе скрытое видно */
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--color-surface);color:var(--color-ink);font-family:var(--font-sans);
+  font-size:var(--text-body);line-height:var(--text-body-lh);-webkit-font-smoothing:antialiased}
+.tnum{font-variant-numeric:tabular-nums}
+.rise{animation:rise .55s cubic-bezier(.22,1,.36,1) both}
+@keyframes rise{from{transform:translateY(14px) scale(.96)}}
+.row-in{animation:row-in .4s cubic-bezier(.22,1,.36,1) both}
+@keyframes row-in{from{transform:translateY(6px)}}
+.pop-in{animation:pop-in .42s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes pop-in{from{transform:scale(.6)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.shell{max-width:1160px;margin:0 auto;padding:40px var(--page) 64px}
+.head{display:flex;align-items:center;justify-content:space-between;gap:var(--gap);margin-bottom:24px;flex-wrap:wrap}
+.wordmark{display:flex;align-items:center;gap:11px}
+.wordmark .mark{width:34px;height:34px;border-radius:10px;background:var(--color-ink);color:var(--color-bg);
+  display:grid;place-items:center;font-size:var(--text-subhead);font-weight:700;letter-spacing:-.02em}
+.wordmark .name{font-size:var(--text-title-2);line-height:var(--text-title-2-lh);font-weight:700;letter-spacing:-.01em}
+
+/* строка запроса */
+.ask{background:var(--color-bg);border-radius:var(--radius-card);padding:20px;margin-bottom:var(--gap)}
+.ask label{display:block;font-size:var(--text-footnote);line-height:var(--text-footnote-lh);color:var(--color-ink-2);margin-bottom:8px}
+.ask-row{display:flex;gap:8px;flex-wrap:wrap}
+#q{flex:1 1 420px;min-width:0;height:var(--tap);padding:0 18px;border:0;border-radius:var(--radius-chip);
+  background:var(--color-surface);font-family:inherit;font-size:var(--text-callout);color:var(--color-ink)}
+#q::placeholder{color:var(--color-ink-3)}
+#q:focus{outline:2px solid var(--color-accent);outline-offset:0}
+#go{height:var(--tap);padding:0 26px;border:0;border-radius:var(--radius-chip);background:var(--color-accent);color:#fff;
+  font-family:inherit;font-size:var(--text-headline);font-weight:600;cursor:pointer;
+  transition:transform .18s cubic-bezier(.22,1,.36,1),background .18s}
+#go:hover{background:var(--color-accent-deep)}
+#go:active{transform:scale(.97)}
+#go:disabled{background:var(--color-surface-2);color:var(--color-ink-3);cursor:default;transform:none}
+#stop{height:var(--tap);padding:0 26px;border:0;border-radius:var(--radius-chip);background:var(--color-ink);color:var(--color-bg);
+  font-family:inherit;font-size:var(--text-headline);font-weight:600;cursor:pointer;transition:transform .18s cubic-bezier(.22,1,.36,1)}
+#stop:active{transform:scale(.97)}
+#stop:disabled{background:var(--color-surface-2);color:var(--color-ink-3);cursor:default;transform:none}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.preset{border:0;background:var(--color-surface);border-radius:var(--radius-chip);padding:8px 14px;cursor:pointer;
+  font-family:inherit;font-size:var(--text-footnote);color:var(--color-ink-2);transition:background .18s}
+.preset:hover{background:var(--color-surface-2);color:var(--color-ink)}
+
+.grid{display:grid;grid-template-columns:1fr 360px;gap:var(--gap);align-items:start}
+@media (max-width:940px){.grid{grid-template-columns:1fr}}
+
+/* находки */
+.finds{display:grid;gap:8px}
+.empty{background:var(--color-bg);border-radius:var(--radius-card);padding:40px 20px;text-align:center;color:var(--color-ink-2);font-size:var(--text-subhead)}
+.find{background:var(--color-bg);border-radius:var(--radius-cover);padding:18px}
+.find .top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.find .av{width:32px;height:32px;border-radius:var(--radius-chip);background:var(--color-surface);display:grid;place-items:center;
+  font-size:var(--text-footnote);font-weight:600;color:var(--color-ink-2)}
+.find .who{font-size:var(--text-subhead);line-height:var(--text-subhead-lh);font-weight:600}
+.find .when{font-size:var(--text-caption);line-height:var(--text-caption-lh);color:var(--color-ink-2)}
+.find .text{font-size:var(--text-read);line-height:var(--text-read-lh);white-space:pre-wrap;
+  -webkit-user-select:text;user-select:text}
+.find .why{margin-top:12px;background:var(--color-tint-mint);border-radius:var(--radius-inner);padding:11px 14px;
+  font-size:var(--text-footnote);line-height:var(--text-footnote-lh)}
+.find .bottom{display:flex;align-items:center;justify-content:space-between;gap:var(--gap);margin-top:12px}
+.find .metrics{display:flex;gap:14px;font-size:var(--text-caption);color:var(--color-ink-2)}
+.find a{font-size:var(--text-footnote);font-weight:600;color:var(--color-accent);text-decoration:none}
+
+/* панель прогона */
+.stage{position:sticky;top:20px;background:var(--color-hero);color:var(--color-on-hero);
+  border-radius:var(--radius-card);padding:18px;display:grid;gap:13px}
+.stage>*{min-width:0}
+.stage-head{display:flex;align-items:center;justify-content:space-between;gap:var(--gap)}
+.stage-title{font-size:var(--text-headline);line-height:var(--text-headline-lh);font-weight:600;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--color-hero-2);border-radius:var(--radius-chip);
+  padding:6px 12px;font-size:var(--text-footnote);color:var(--color-ink-3);flex-shrink:0;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:var(--radius-chip);background:var(--color-ink-3)}
+.dot.live{background:var(--color-success);animation:pulse 1.1s ease-in-out infinite}
+.dot.done{background:var(--color-success)}
+.dot.err{background:#ff453a}
+@keyframes pulse{50%{transform:scale(1.55)}}
+.hero-num{display:grid;gap:2px;padding:4px 0 2px}
+.hero-num .v{font-size:44px;line-height:46px;font-weight:700;letter-spacing:-.03em}
+.hero-num .k{font-size:var(--text-subhead);line-height:var(--text-subhead-lh);color:var(--color-ink-3)}
+.counters{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.counter{background:var(--color-hero-2);border-radius:var(--radius-inner);padding:13px}
+.counter .v{font-size:var(--text-title-3);line-height:var(--text-title-3-lh);font-weight:700}
+.counter .k{font-size:var(--text-caption);line-height:var(--text-caption-lh);color:var(--color-ink-3);margin-top:2px}
+.srow .top{display:flex;justify-content:space-between;font-size:var(--text-footnote);line-height:var(--text-footnote-lh)}
+.srow .num{color:var(--color-ink-3)}
+.track{height:5px;border-radius:var(--radius-chip);background:var(--color-hero-3);margin-top:7px;overflow:hidden}
+.fill{display:block;width:100%;height:100%;border-radius:var(--radius-chip);background:var(--color-accent);
+  transform-origin:left center;transform:scaleX(0);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.fill.done{background:var(--color-success)}
+.console{background:var(--color-hero-2);border-radius:var(--radius-inner);padding:11px 13px;max-height:150px;
+  overflow-y:auto;overflow-x:hidden}
+.log{font-family:var(--font-mono);font-size:var(--text-caption);line-height:19px;display:grid;gap:1px;margin:0}
+.log div{color:var(--color-ink-3);overflow-wrap:anywhere}
+.log div.ok{color:var(--color-success)}
+.log div.warn{color:#ffd60a}
+.err-box{background:var(--color-tint-red);color:#000;border-radius:var(--radius-inner);padding:13px;
+  font-size:var(--text-footnote);line-height:var(--text-footnote-lh)}
+.note{margin:20px 0 0;font-size:var(--text-footnote);line-height:var(--text-footnote-lh);color:var(--color-ink-2)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="head">
+    <div class="wordmark"><span class="mark">th</span><span class="name">studio</span></div>
+  </div>
+
+  <div class="ask">
+    <label for="q">Что найти в Threads</label>
+    <div class="ask-row">
+      <input id="q" placeholder="например: кто ищет того, кто сделает сайт" autocomplete="off" />
+      <button id="go">Найти</button>
+      <button id="stop" hidden>Стоп</button>
+    </div>
+    <div class="presets" id="presets"></div>
+  </div>
+
+  <div class="grid">
+    <div class="finds" id="finds">
+      <div class="empty">Напиши запрос своими словами и нажми «Найти».</div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-head">
+        <div class="stage-title" id="stageTitle">Готов</div>
+        <div class="pill"><span class="dot" id="dot"></span><span id="stateText">ожидание</span></div>
+      </div>
+      <div class="hero-num tnum" id="heroBox" hidden>
+        <div class="v" id="cFinds">0</div>
+        <div class="k" id="heroKey">находок</div>
+      </div>
+      <div class="counters tnum" id="countBox" hidden>
+        <div class="counter"><div class="v" id="cFresh">0</div><div class="k">свежих постов</div></div>
+        <div class="counter"><div class="v" id="cSeen">0</div><div class="k">разобрано агентом</div></div>
+      </div>
+      <div class="srow" id="rowBat" hidden>
+        <div class="top"><span>Разбор агентом</span><span class="num tnum" id="nBat"></span></div>
+        <div class="track"><span class="fill" id="fBat"></span></div>
+      </div>
+      <div id="errBox"></div>
+      <div class="console" id="consoleBox" hidden><div class="log tnum" id="log"></div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const PRESETS = [
+  "кто ищет того, кто сделает сайт",
+  "кому нужна автоматизация или бот",
+  "кто нанимает на обработку заявок",
+  "у кого что-то не работает в продажах",
+  "кто сам не может найти клиентов",
+];
+
+$("presets").innerHTML = PRESETS.map((p) => `<button class="preset">${p}</button>`).join("");
+$("presets").addEventListener("click", (e) => {
+  const b = e.target.closest(".preset");
+  if (b) { $("q").value = b.textContent; $("q").focus(); }
+});
+
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[c]));
+
+const when = (ts) => {
+  if (!ts) return "";
+  const d = new Date(ts), now = new Date();
+  const h = Math.round((now - d) / 36e5);
+  if (h < 1) return "только что";
+  if (h < 24) return `${h} ч назад`;
+  return d.toLocaleDateString("ru-RU", { day: "numeric", month: "short" });
+};
+
+let poll = null;
+
+// Прогон идёт, пока не нажмёшь «Стоп». Конца у живого потока нет.
+async function start() {
+  const query = $("q").value.trim();
+  if (!query) { $("q").focus(); return; }
+  $("go").hidden = true;
+  $("stop").hidden = false;
+  $("stop").disabled = false;
+  $("stop").textContent = "Стоп";
+  $("finds").innerHTML = `<div class="empty">Ловлю посты прямо сейчас…</div>`;
+  await fetch("/api/run", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query }),
+  });
+  if (poll) clearInterval(poll);
+  poll = setInterval(tick, 700);
+}
+
+async function halt() {
+  $("stop").disabled = true;
+  $("stop").textContent = "Доразбираю";
+  await fetch("/api/stop", { method: "POST" });
+}
+
+function bar(rowId, fillId, numId, done, total, label) {
+  $(rowId).hidden = !total;
+  if (!total) return;
+  $(numId).textContent = label;
+  $(fillId).style.transform = `scaleX(${done / total})`;
+  $(fillId).classList.toggle("done", done >= total);
+}
+
+// 1 находка, 2 находки, 5 находок
+const plural = (n, one, few, many) => {
+  const a = Math.abs(n) % 100, b = a % 10;
+  if (a > 10 && a < 20) return many;
+  if (b > 1 && b < 5) return few;
+  return b === 1 ? one : many;
+};
+
+let lastLog = 0, lastFinds = -1;
+
+async function tick() {
+  const s = await (await fetch("/api/state")).json();
+
+  $("stageTitle").textContent =
+    s.stage === "running" ? (s.stopping ? "Дочитываю" : "Ловлю") :
+    s.stage === "done" ? "Готово" : s.stage === "error" ? "Ошибка" : "Готов";
+  $("stateText").textContent =
+    s.stage === "running" ? (s.stopping ? "останавливаю" : `${s.elapsed || 0} сек`) :
+    s.stage === "done" ? `${s.elapsed} сек` : s.stage === "error" ? "сбой" : "ожидание";
+  $("dot").className = "dot " + (s.stage === "running" ? "live" : s.stage === "done" ? "done" : s.stage === "error" ? "err" : "");
+
+  // В покое панель молчит: стена нулей и пустых полос ничего не сообщает.
+  const live = s.stage === "running";
+  $("go").hidden = live;
+  $("stop").hidden = !live;
+  if (live && !s.stopping && !poll) poll = setInterval(tick, 700);
+
+  const busy = live || s.stage === "done" || s.stage === "error";
+  $("heroBox").hidden = $("countBox").hidden = $("consoleBox").hidden = !busy;
+
+  const finds = (s.results || []).length;
+  $("cFinds").textContent = finds;
+  $("heroKey").textContent = plural(finds, "находка", "находки", "находок");
+  $("cFresh").textContent = s.fresh ?? 0;
+  $("cSeen").textContent = s.analyzed ?? 0;
+
+  bar("rowBat", "fBat", "nBat", s.batches_done || 0, s.batches_total || 0,
+      `${s.batches_done || 0} из ${s.batches_total || 0}`);
+
+  const logs = s.log || [];
+  for (let i = lastLog; i < logs.length; i++) {
+    const d = document.createElement("div");
+    d.className = "row-in " + (logs[i].kind || "");
+    d.textContent = logs[i].text;
+    $("log").append(d);
+  }
+  if (logs.length > lastLog) { lastLog = logs.length; const c = $("log").parentElement; c.scrollTop = c.scrollHeight; }
+
+  $("errBox").innerHTML = s.error ? `<div class="err-box">${esc(s.error)}</div>` : "";
+
+  const r = s.results || [];
+  if (r.length !== lastFinds) {
+    lastFinds = r.length;
+    $("finds").innerHTML = r.length ? r.map((f) => `
+      <article class="find rise">
+        <div class="top">
+          <span class="av">${esc((f.username || "?")[0].toUpperCase())}</span>
+          <span><span class="who">@${esc(f.username)}</span><br><span class="when">${when(f.timestamp)}</span></span>
+        </div>
+        <div class="text">${esc(f.text)}</div>
+        ${f.why ? `<div class="why">${esc(f.why)}</div>` : ""}
+        <div class="bottom">
+          <span class="metrics tnum"><span>♥ ${f.likes ?? 0}</span><span>↩ ${f.replies ?? 0}</span></span>
+          <a href="${esc(f.permalink)}" target="_blank" rel="noopener">Открыть в Threads →</a>
+        </div>
+      </article>`).join("")
+      : `<div class="empty">${
+          s.stage === "done" ? "Сейчас по этому запросу никто ничего не пишет. Поймай подольше или спроси иначе."
+          : s.stage === "running" ? "Ловлю посты прямо сейчас…"
+          : s.stage === "error" ? "Прогон не запустился. Причина в панели справа."
+          : "Напиши запрос своими словами и нажми «Найти»."
+        }</div>`;
+  }
+
+  if (s.stage === "done" || s.stage === "error") {
+    clearInterval(poll); poll = null;
+    $("stop").hidden = true;
+    $("go").hidden = false;
+  }
+}
+
+$("go").addEventListener("click", start);
+$("stop").addEventListener("click", halt);
+$("q").addEventListener("keydown", (e) => { if (e.key === "Enter") start(); });
+
+tick();
+</script>
+</body>
+</html>

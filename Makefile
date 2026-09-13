@@ -13,7 +13,7 @@ LDFLAGS := -s -w \
 	-X github.com/Egor01KKK/threads-content-research-agent/cli.Commit=$(COMMIT) \
 	-X github.com/Egor01KKK/threads-content-research-agent/cli.Date=$(DATE)
 
-.PHONY: build install test vet fmt check public-check viewer-check viewer clean run smoke
+.PHONY: build install test vet fmt check public-check viewer-check viewer studio clean run smoke
 
 build:
 	@mkdir -p $(dir $(BINARY))
@@ -49,6 +49,9 @@ smoke: build
 
 viewer: viewer-check
 	python3 scripts/research-viewer.py --input "$(VIEWER_INPUT)" --host "$(VIEWER_HOST)" --port "$(VIEWER_PORT)" $(if $(VIEWER_PREP),--prep "$(VIEWER_PREP)",)
+
+studio: build
+	python3 scripts/studio.py
 
 run: build
 	./$(BINARY) $(ARGS)

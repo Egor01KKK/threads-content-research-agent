@@ -12,6 +12,7 @@ The core workflow needs no Threads login, browser automation, ChatGPT, or paid A
 - Runs bounded topic research with deterministic query expansion, deduplication, author context, engagement metrics, baseline comparisons, and evidence-linked reports.
 - Stores collected research in SQLite and emits JSON, JSONL, CSV, TSV, YAML, URL, or table output.
 - Opens an existing JSON export in the optional read-only Research Viewer.
+- Runs an optional local live-search studio for Russian-language Threads, judged by a terminal agent under your own subscription.
 
 ## What it is not
 
@@ -27,7 +28,8 @@ The current repository is an experimental `v0.1.x`-style productization of the e
 
 - Go 1.26 or newer for building from source (`go.mod` is the source of truth).
 - Git for cloning and `make` for the documented source-build shortcuts.
-- Python 3.10 or newer only for the optional viewer.
+- Python 3.10 or newer only for the optional viewer and live studio.
+- A signed-in Codex CLI or Claude Code only for the optional live studio; the core CLI never calls a model.
 - Network access to `www.threads.com` for live collection; `th id`, formatting, tests, and the viewer fixture work offline.
 
 The core CLI is pure Go and is expected to build on macOS, Linux, and Windows. The Makefile and viewer are tested on Unix-like systems; Windows users can use `go build ./cmd/th` and run the resulting binary directly. Prebuilt release artifacts are prepared for macOS arm64/amd64, Linux arm64/amd64, and Windows amd64 when a version tag is published.
@@ -154,6 +156,25 @@ python3 scripts/research-viewer.py \
 
 The server binds to `127.0.0.1` and serves only the viewer assets plus the two explicitly selected JSON routes. See [docs/VIEWER.md](docs/VIEWER.md).
 
+## Live search studio
+
+An optional local app that collects Threads posts as they are published and
+keeps the ones answering a question you type in plain Russian. It needs no
+Threads login and no API key: collection is the same anonymous public surface
+used elsewhere, and the judgement call is delegated to a Codex or Claude Code
+session you are already signed into.
+
+```sh
+make studio          # builds ./bin/th, serves http://127.0.0.1:4200
+```
+
+The studio is Russian-only by design, discards anything older than 24 hours,
+and streams matches to the page while collection continues. The anonymous
+search surface it draws from is a loosely filtered live window rather than a
+true keyword search, so a run reads several hundred posts to surface a handful.
+Setup, filtering rules, measured limits, and troubleshooting are in
+[docs/STUDIO.md](docs/STUDIO.md).
+
 ## Development
 
 ```sh
@@ -163,6 +184,7 @@ make check         # tests, vet, and lightweight viewer checks
 make build         # ./bin/th
 make smoke         # bounded live/offline smoke checks; requires Threads access for live steps
 make viewer        # serve the synthetic fixture
+make studio        # serve the live search studio
 ```
 
 The Go package layout is described in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). The output contract is in [docs/OUTPUT-SCHEMA.md](docs/OUTPUT-SCHEMA.md), and common failures are covered by [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
